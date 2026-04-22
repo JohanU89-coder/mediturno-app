@@ -33,3 +33,13 @@ node server.js
 ```
 
 ## 📁 Estructura del proyecto
+
+mediturno-app/
+├── src/
+│ ├── frontend/
+│ └── backend/
+└── docs/
+
+## 📌 Versión actual
+
+v1.0 — Primera versión funcional

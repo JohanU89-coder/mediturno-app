@@ -14,6 +14,25 @@ router.get('/', (req, res) => {
     });
 });
 
+// Endpoint 2: POST /api/turnos
+router.post('/', (req, res) => {
+    const { paciente, fecha, hora } = req.body;
+    
+    const nuevoTurno = {
+        id: turnos.length > 0 ? turnos[turnos.length - 1].id + 1 : 1,
+        paciente,
+        fecha,
+        hora,
+        estado: "pendiente"
+    };
+
+    turnos.push(nuevoTurno);
+    res.status(201).json({
+        mensaje: "Turno reservado con éxito",
+        turno: nuevoTurno
+    });
+});
+
 
 
 module.exports = router;

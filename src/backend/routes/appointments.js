@@ -33,6 +33,17 @@ router.post('/', (req, res) => {
     });
 });
 
+// Endpoint 3: DELETE /api/turnos/:id 
+router.delete('/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const turnoIndex = turnos.findIndex(t => t.id === id);
 
+    if (turnoIndex !== -1) {
+        turnos.splice(turnoIndex, 1);
+        res.status(200).json({ mensaje: `Turno con ID ${id} cancelado correctamente` });
+    } else {
+        res.status(404).json({ mensaje: "Turno no encontrado" });
+    }
+});
 
 module.exports = router;

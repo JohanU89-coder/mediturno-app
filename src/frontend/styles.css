@@ -452,4 +452,18 @@ select {
   .showcase-copy h1 {
     font-size: 2.2rem;
   }
+
+
+}
+
+
+
+/* cambios del Integrante 3 */
+.button {
+  background-color: blue;
+}
+
+/* cambios del Integrante 2 */
+.button {
+  background-color: green;
 }

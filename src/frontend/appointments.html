@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediTurno | Agendamiento</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="appointments.css">
+</head>
+<body class="auth-page">
+  <main class="auth-card wide-card" style="max-width: 900px; margin: 40px auto;">
+    <div class="card-heading">
+      <span class="eyebrow">Agendamiento</span>
+      <h2>Reserva una cita médica</h2>
+      <p>Selecciona tus datos de atención y confirma el turno disponible.</p>
+    </div>
+
+    <form id="appointmentForm" class="auth-form">
+      <label class="field">
+        <span>Paciente</span>
+        <input type="text" id="paciente" placeholder="Nombre del paciente" required>
+      </label>
+
+      <label class="field">
+        <span>Especialidad</span>
+        <select id="especialidad" required>
+          <option value="">Selecciona una especialidad</option>
+          <option value="Medicina General">Medicina General</option>
+          <option value="Cardiología">Cardiología</option>
+          <option value="Pediatría">Pediatría</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Fecha</span>
+        <input type="date" id="fecha" required>
+      </label>
+
+      <label class="field">
+        <span>Hora</span>
+        <select id="hora" required>
+          <option value="">Selecciona un horario</option>
+          <option value="09:00">09:00</option>
+          <option value="10:00">10:00</option>
+          <option value="11:00">11:00</option>
+          <option value="15:00">15:00</option>
+        </select>
+      </label>
+
+      <button type="submit" class="btn btn-primary">Reservar turno</button>
+    </form>
+
+    <div id="resultado" style="margin-top: 20px;"></div>
+  </main>
+
+  <script src="appointments.js"></script>
+</body>
+</html>

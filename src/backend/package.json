@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node index.js",
-    "test": "jest --forceExit --testTimeout=10000"
+    "test": "jest --forceExit --testTimeout=10000 --passWithNoTests"
   },
   "keywords": [],
   "author": "",

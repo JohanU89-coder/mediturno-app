@@ -1,52 +1,73 @@
-.main-appointments {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
+.main-appointments { max-width:800px;
+     margin:30px auto; 
+     padding:0 20px; 
+     display:flex; 
+     flex-direction:column; 
+     gap:25px; }
 
-.seccion {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
 
-.seccion h2 {
-    color: #1565c0;
-    margin-bottom: 18px;
-    border-bottom: 2px solid #e3f2fd;
-    padding-bottom: 8px;
-}
+.seccion { background:white;
+     padding:25px; 
+     border-radius:10px; 
+     box-shadow:0 2px 8px rgba(0,0,0,0.08); 
+    }
 
-.cita-card {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 12px;
-    background: #fafafa;
-}
 
-.cita-card h3 {
-    color: #1565c0;
-    margin-bottom: 8px;
-}
+.seccion h2 { color:#1565c0;
+     margin-bottom:18px; 
+     border-bottom:2px solid #e3f2fd; 
+     padding-bottom:8px; }
 
-.btn-cancelar {
-    margin-top: 10px;
-    background: #c62828;
-    color: white;
-    border: none;
-    padding: 7px 14px;
-    border-radius: 5px;
-    cursor: pointer;
-}
+.cita-card { border:1px solid #e0e0e0; 
+    border-radius:8px; 
+    padding:15px; 
+    margin-bottom:12px; 
+    background:#fafafa; }
 
-.btn-cancelar:hover {
-    background: #b71c1c;
-}
+.cita-card h3 { color:#1565c0;
+     margin-bottom:8px; }
+
+.btn-cancelar { margin-top:10px; 
+    background:#c62828;
+     color:white; 
+     border:none;
+      padding:7px 14px; 
+      border-radius:5px;
+
+
+ 
+      
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      cursor:pointer; }
+.btn-cancelar:hover { background:#b71c1c; }
 
 
 

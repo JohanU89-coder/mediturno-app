@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>MediTurno – Mis Citas</title>
+  <link rel="stylesheet" href="styleindex.css">
+  <link rel="stylesheet" href="appointments.css">
+</head>
+<body>
+  <header>
+    <h1>🏥 MediTurno</h1>
+    <p>Gestión de citas médicas</p>
+    <div class="header-nav">
+      <button id="btn-cerrar-sesion">Cerrar sesión</button>
+    </div>
+  </header>
+  <main class="main-appointments">
+    <section class="seccion">
+      <h2>Reservar nueva cita</h2>
+      <form id="form-cita">
+        <div class="campo">
+          <label for="medico">Médico:</label>
+          <select id="medico" required>
+            <option value="">Seleccionar médico</option>
+            <option value="Dr. García – Cardiología">Dr. García – Cardiología</option>
+            <option value="Dra. López – Pediatría">Dra. López – Pediatría</option>
+            <option value="Dr. Torres – Medicina General">Dr. Torres – Medicina General</option>
+            <option value="Dra. Ríos – Dermatología">Dra. Ríos – Dermatología</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="fecha">Fecha:</label>
+          <input type="date" id="fecha" required>
+        </div>
+        <div class="campo">
+          <label for="hora">Hora:</label>
+          <select id="hora" required>
+            <option value="">Seleccionar hora</option>
+            <option value="09:00">09:00 am</option>
+            <option value="10:00">10:00 am</option>
+            <option value="11:00">11:00 am</option>
+            <option value="15:00">03:00 pm</option>
+            <option value="16:00">04:00 pm</option>
+          </select>
+        </div>
+        <button type="submit">Reservar cita</button>
+      </form>
+      <p id="msg-cita"></p>
+    </section>
+    <section class="seccion">
+      <h2>Mis citas agendadas</h2>
+      <button id="btn-recargar">Actualizar lista</button>
+      <div id="lista-citas"><p>Cargando...</p></div>
+    </section>
+  </main>
+  <script src="appointments.js"></script>
+</body>
+</html>

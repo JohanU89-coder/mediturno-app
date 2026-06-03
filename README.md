@@ -6,9 +6,9 @@ Sistema web para gestión de citas médicas.
 https://github.com/JohanU89-coder/mediturno-app
 
 ## Integrantes
-- Integrante 1 (U20235453) – Líder / Repositorio
+- Integrante 1 (U22317927) – Líder / Repositorio
 - Integrante 2 (U23253355) – Frontend: Registro y Login
-- Integrante 3 (U22317927) – Frontend: Agendamiento de Citas  
+- Integrante 3 (U20235453) – Frontend: Agendamiento de Citas  
 - Integrante 4 (U23219521) – Backend: API de Usuarios
 - Integrante 5 (U23262057) – Backend: API de Turnos + QA
 

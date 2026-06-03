@@ -1,45 +1,61 @@
-# MediTurno 🏥
+# MediTurno App
 
-Aplicación web para reservas de turnos médicos online.
+Aplicación web para gestión de turnos médicos. Esta app permite a usuarios registrar citas, consultar disponibilidad de especialistas y administrar turnos desde una interfaz sencilla.
 
-## 📋 Descripción
+## Características
 
-MediTurno permite a pacientes registrarse, iniciar sesión y agendar citas médicas.
-Los administradores pueden gestionar y confirmar los turnos del día.
+- Registro y autenticación de usuarios
+- Reserva de turnos con especialistas
+- Visualización de calendario y horarios disponibles
+- Gestión de citas para pacientes y personal de salud
+- Interfaz responsiva para dispositivos móviles y escritorio
 
-## 🛠️ Tecnologías utilizadas
+## Tecnologías
 
-- HTML, CSS, JavaScript (Frontend)
-- Node.js + Express (Backend)
-- Git + GitHub (Control de versiones)
+- React
+- Node.js / Express (según implementación)
+- Base de datos (por ejemplo, MongoDB o PostgreSQL)
+- CSS / Framework de estilos
 
-## 👥 Equipo de desarrollo
+## Instalación
 
-| Integrante     | Rol                         |
-| -------------- | --------------------------- |
-| Johan Gonzales | Líder del Proyecto / DevOps |
-| Integrante 2   | Desarrollador Frontend      |
-| Integrante 3   | Desarrollador Frontend      |
-| Integrante 4   | Desarrollador Backend       |
-| Integrante 5   | Backend + QA                |
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/JohanU89-coder/mediturno-app.git
+   ```
+2. Entra al directorio del proyecto:
+   ```bash
+   cd mediturno-app
+   ```
+3. Instala las dependencias:
+   ```bash
+   npm install
+   ```
 
-## 🚀 Instalación
+## Uso
 
-```bash
-git clone https://github.com/TU_USUARIO/mediturno-app.git
-cd mediturno-app/src/backend
-npm install
-node server.js
-```
+1. Inicia la aplicación en modo desarrollo:
+   ```bash
+   npm start
+   ```
+2. Abre tu navegador en `http://localhost:3000`
 
-## 📁 Estructura del proyecto
+## Contribución
 
-mediturno-app/
-├── src/
-│ ├── frontend/
-│ └── backend/
-└── docs/
+1. Crea una rama nueva:
+   ```bash
+   git checkout -b feature/nueva-funcionalidad
+   ```
+2. Realiza tus cambios y haz commit:
+   ```bash
+   git commit -m "Descripción de la mejora"
+   ```
+3. Empuja la rama al repositorio remoto:
+   ```bash
+   git push origin feature/nueva-funcionalidad
+   ```
+4. Abre un pull request para revisión.
 
-## 📌 Versión actual
+## Licencia
 
-v1.0 — Primera versión funcional
+Este proyecto puede ser distribuido bajo la licencia que defina el autor.

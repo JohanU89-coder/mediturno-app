@@ -20,6 +20,16 @@ router.post('/registro', async (req, res) => {
   res.status(201).json({ mensaje: 'Usuario registrado correctamente', usuario: { id: nuevoUsuario.id, nombre, email } });
 });
 
-
+// POST /api/usuarios/login
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) { return res.status(400).json({ mensaje: 'Email y password son obligatorios' }); }
+  const usuario = usuarios.find(u => u.email === email);
+  if (!usuario) { return res.status(401).json({ mensaje: 'Credenciales incorrectas' }); }
+  const passwordValido = await bcrypt.compare(password, usuario.password);
+  if (!passwordValido) { return res.status(401).json({ mensaje: 'Credenciales incorrectas' }); }
+  const token = jwt.sign({ id: usuario.id, email: usuario.email }, SECRET, { expiresIn: '2h' });
+  res.json({ mensaje: 'Login exitoso', token, usuario: { id: usuario.id, nombre: usuario.nombre, email: usuario.email } });
+});
 
 module.exports = router;

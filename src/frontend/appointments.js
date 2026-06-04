@@ -1,3 +1,4 @@
+
 const API = 'http://localhost:5000/api';
 
 function getToken() { return localStorage.getItem('token'); }
@@ -58,3 +59,4 @@ async function cancelarCita(id) {
     else { alert('Error al cancelar la cita.'); }
   } catch { alert('No se pudo conectar con el servidor.'); }
 }
+

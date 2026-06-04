@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "jest --runInBand"
   },
   "keywords": [],
   "author": "",

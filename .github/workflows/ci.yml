@@ -1,0 +1,49 @@
+name: MediTurno CI
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+      - 'feature/**'
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+
+  probar-backend:
+    name: Pruebas del Backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js v20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependencias
+        working-directory: src/backend
+        run: npm install
+
+      - name: Ejecutar pruebas
+        working-directory: src/backend
+        run: npm test
+
+  verificar-frontend:
+    name: Verificar archivos del Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Comprobar archivos HTML
+        run: |
+          echo "Verificando frontend..."
+          test -f src/frontend/index.html      && echo "OK index.html"      || (echo "FALTA index.html" && exit 1)
+          test -f src/frontend/login.html      && echo "OK login.html"      || (echo "FALTA login.html" && exit 1)
+          test -f src/frontend/appointments.html && echo "OK appointments.html" || (echo "FALTA appointments.html" && exit 1)
+          echo "Frontend OK" 

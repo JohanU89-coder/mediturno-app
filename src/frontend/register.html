@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediTurno | Registro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+  <div class="auth-shell register-layout">
+    <main class="auth-content">
+      <section class="auth-card wide-card">
+        <div class="card-heading">
+          <span class="eyebrow">Nuevo usuario</span>
+          <h2>Crea tu cuenta</h2>
+          <p>Empieza a reservar turnos medicos, recibir recordatorios y administrar tus consultas.</p>
+        </div>
+
+        <form class="auth-form">
+          <div class="field-grid">
+            <label class="field">
+              <span>Nombres</span>
+              <input type="text" name="first_name" placeholder="Ingresa tus nombres" required>
+            </label>
+
+            <label class="field">
+              <span>Apellidos</span>
+              <input type="text" name="last_name" placeholder="Ingresa tus apellidos" required>
+            </label>
+          </div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>DNI o documento</span>
+              <input type="text" name="document" placeholder="Numero de documento" required>
+            </label>
+
+            <label class="field">
+              <span>Telefono</span>
+              <input type="tel" name="phone" placeholder="+51 999 999 999" required>
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Correo electronico</span>
+            <input type="email" name="email" placeholder="paciente@correo.com" required>
+          </label>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>Contraseña</span>
+              <input type="password" name="password" placeholder="Crea una contraseña segura" required>
+            </label>
+
+            <label class="field">
+              <span>Confirmar contraseña</span>
+              <input type="password" name="confirm_password" placeholder="Repite la contraseña" required>
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Tipo de seguro o cobertura</span>
+            <select name="insurance">
+              <option value="">Selecciona una opcion</option>
+              <option value="essalud">EsSalud</option>
+              <option value="sis">SIS</option>
+              <option value="privado">Seguro privado</option>
+              <option value="ninguno">Sin cobertura</option>
+            </select>
+          </label>
+
+          <label class="check-field consent">
+            <input type="checkbox" name="terms" required>
+            <span>Acepto los terminos de uso y el tratamiento de mis datos para la gestion de citas medicas.</span>
+          </label>
+
+          <button type="submit" class="btn btn-primary">Crear cuenta</button>
+        </form>
+
+        <p class="auth-footer">
+          Ya tienes una cuenta?
+          <a href="login.html" class="text-link">Inicia sesion</a>
+        </p>
+      </section>
+    </main>
+
+    <aside class="auth-showcase slim-showcase">
+      <nav class="brand-bar">
+        <a class="brand-mark" href="index.html" aria-label="Ir al inicio de MediTurno">
+          <span class="brand-icon">+</span>
+          <span class="brand-text">MediTurno</span>
+        </a>
+      </nav>
+
+      <div class="showcase-copy">
+        <span class="eyebrow">Atencion mas conectada</span>
+        <h1>Un registro simple para una experiencia medica mejor organizada.</h1>
+        <p>
+          Centraliza tus datos esenciales para reservar con mayor rapidez y reducir
+          tiempos de espera en cada nueva consulta.
+        </p>
+      </div>
+
+      <div class="benefit-stack">
+        <article class="benefit-card">
+          <strong>Agenda disponible 24/7</strong>
+          <p>Reserva segun la especialidad, sede y horario que mejor te convenga.</p>
+        </article>
+        <article class="benefit-card">
+          <strong>Recordatorios oportunos</strong>
+          <p>Evita ausencias con avisos previos para cada cita confirmada.</p>
+        </article>
+        <article class="benefit-card">
+          <strong>Experiencia confiable</strong>
+          <p>Disenada para pacientes que necesitan claridad, orden y rapidez.</p>
+        </article>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>

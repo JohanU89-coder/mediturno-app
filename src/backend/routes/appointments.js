@@ -1,49 +1,40 @@
 const express = require('express');
-const router = express.Router();
+const jwt     = require('jsonwebtoken');
+const router  = express.Router();
 
-// Base de datos en memoria temporal
-let turnos = [
-    { id: 1, paciente: "Juan Perez", fecha: "2026-04-30", hora: "10:00", estado: "confirmado" }
-];
+const SECRET = 'mediturno_secret_2026';
+let turnos = [];
 
-// Endpoint 1: GET /api/turnos 
-router.get('/', (req, res) => {
-    res.status(200).json({
-        mensaje: "Lista de turnos recuperada con éxito",
-        turnos: turnos
-    });
+function verificarToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) { return res.status(401).json({ mensaje: 'Token requerido' }); }
+  try { const decoded = jwt.verify(token, SECRET); req.usuario = decoded; next(); }
+  catch { return res.status(401).json({ mensaje: 'Token inválido o expirado' }); }
+}
+
+// GET /api/turnos
+router.get('/', verificarToken, (req, res) => {
+  const misTurnos = turnos.filter(t => t.usuarioId === req.usuario.id);
+  res.json(misTurnos);
 });
 
-// Endpoint 2: POST /api/turnos
-router.post('/', (req, res) => {
-    const { paciente, fecha, hora } = req.body;
-    
-    const nuevoTurno = {
-        id: turnos.length > 0 ? turnos[turnos.length - 1].id + 1 : 1,
-        paciente,
-        fecha,
-        hora,
-        estado: "pendiente"
-    };
-
-    turnos.push(nuevoTurno);
-    res.status(201).json({
-        mensaje: "Turno reservado con éxito",
-        turno: nuevoTurno
-    });
+// POST /api/turnos
+router.post('/', verificarToken, (req, res) => {
+  const { medico, fecha, hora } = req.body;
+  if (!medico || !fecha || !hora) { return res.status(400).json({ mensaje: 'Campos obligatorios: medico, fecha, hora' }); }
+  const nuevaCita = { id: turnos.length + 1, usuarioId: req.usuario.id, medico, fecha, hora };
+  turnos.push(nuevaCita);
+  res.status(201).json({ mensaje: 'Cita reservada', cita: nuevaCita });
 });
 
-// Endpoint 3: DELETE /api/turnos/:id 
-router.delete('/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const turnoIndex = turnos.findIndex(t => t.id === id);
-
-    if (turnoIndex !== -1) {
-        turnos.splice(turnoIndex, 1);
-        res.status(200).json({ mensaje: `Turno con ID ${id} cancelado correctamente` });
-    } else {
-        res.status(404).json({ mensaje: "Turno no encontrado" });
-    }
+// DELETE /api/turnos/:id
+router.delete('/:id', verificarToken, (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = turnos.findIndex(t => t.id === id && t.usuarioId === req.usuario.id);
+  if (index === -1) { return res.status(404).json({ mensaje: 'Cita no encontrada' }); }
+  turnos.splice(index, 1);
+  res.json({ mensaje: 'Cita cancelada correctamente' });
 });
 
 module.exports = router;

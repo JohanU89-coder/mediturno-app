@@ -1,45 +1,34 @@
-# MediTurno 🏥
+# MediTurno App
 
-Aplicación web para reservas de turnos médicos online.
+Sistema web para gestión de citas médicas.
 
-## 📋 Descripción
+## Repositorio
+https://github.com/JohanU89-coder/mediturno-app
 
-MediTurno permite a pacientes registrarse, iniciar sesión y agendar citas médicas.
-Los administradores pueden gestionar y confirmar los turnos del día.
+## Integrantes
+- Integrante 1 (U22317927) – Líder / Repositorio
+- Integrante 2 (U23253355) – Frontend: Registro y Login
+- Integrante 3 (U20235453) – Frontend: Agendamiento de Citas  
+- Integrante 4 (U23219521) – Backend: API de Usuarios
+- Integrante 5 (U23262057) – Backend: API de Turnos + QA
 
-## 🛠️ Tecnologías utilizadas
+## Tecnologías
+- Frontend: HTML, CSS, JavaScript
+- Backend: Node.js + Express
+- Autenticación: JWT + bcrypt
+- CI/CD: GitHub Actions
+- Gestión: Trello
+- Comunicación: Slack
 
-- HTML, CSS, JavaScript (Frontend)
-- Node.js + Express (Backend)
-- Git + GitHub (Control de versiones)
+## Flujo de trabajo del equipo
+1. Nunca hacer push directo a `main` o `develop`
+2. Siempre trabajar en una rama `feature/nombre`
+3. Todo cambio pasa por Pull Request
+4. El PR necesita 1 aprobación mínima
+5. GitHub Actions debe estar en verde antes del merge
 
-## 👥 Equipo de desarrollo
-
-| Integrante     | Rol                         |
-| -------------- | --------------------------- |
-| Johan Gonzales | Líder del Proyecto / DevOps |
-| Integrante 2   | Desarrollador Frontend      |
-| Integrante 3   | Desarrollador Frontend      |
-| Integrante 4   | Desarrollador Backend       |
-| Integrante 5   | Backend + QA                |
-
-## 🚀 Instalación
-
-```bash
-git clone https://github.com/TU_USUARIO/mediturno-app.git
-cd mediturno-app/src/backend
-npm install
-node server.js
-```
-
-## 📁 Estructura del proyecto
-
-mediturno-app/
-├── src/
-│ ├── frontend/
-│ └── backend/
-└── docs/
-
-## 📌 Versión actual
-
-v1.0 — Primera versión funcional
+## Ramas principales
+- `main` → versión estable en producción
+- `develop` → integración de todo el trabajo
+- `feature/*` → una por cada funcionalidad
+- `release/v1.0` → preparación del release final

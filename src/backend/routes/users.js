@@ -1,60 +1,75 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { JWT_SECRET } = require('../config');
+
 const router = express.Router();
+let usuarios = [];
 
-let users = [
-  { id: 1, email: 'test@example.com', password: '12345', name: 'Usuario Test' }
-];
+// POST /api/usuarios/registro
+router.post('/registro', async (req, res) => {
+  const { nombre, email, password } = req.body;
 
-router.post('/register', (req, res) => {
-  const { email, password, name } = req.body;
-
-  if (!email || !password || !name) {
-    return res.status(400).json({ error: 'Email, contraseña y nombre requeridos' });
+  if (!nombre || !email || !password) {
+    return res.status(400).json({ mensaje: 'Todos los campos son obligatorios: nombre, email, password' });
   }
 
-  if (users.find(u => u.email === email)) {
-    return res.status(409).json({ error: 'El email ya está registrado' });
+  const existe = usuarios.find((usuario) => usuario.email === email);
+  if (existe) {
+    return res.status(400).json({ mensaje: 'El email ya esta registrado' });
   }
 
-  const newUser = {
-    id: users.length + 1,
+  const passwordHash = await bcrypt.hash(password, 10);
+  const nuevoUsuario = {
+    id: usuarios.length + 1,
+    nombre,
     email,
-    password,
-    name
+    password: passwordHash
   };
 
-  users.push(newUser);
+  usuarios.push(nuevoUsuario);
 
-  res.status(201).json({
-    message: 'Usuario registrado exitosamente',
-    user: {
-      id: newUser.id,
-      email: newUser.email,
-      name: newUser.name
+  return res.status(201).json({
+    mensaje: 'Usuario registrado correctamente',
+    usuario: {
+      id: nuevoUsuario.id,
+      nombre,
+      email
     }
   });
 });
 
-
-router.post('/login', (req, res) => {
+// POST /api/usuarios/login
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ error: 'Email y contraseña requeridos' });
+    return res.status(400).json({ mensaje: 'Email y password son obligatorios' });
   }
 
-  const user = users.find(u => u.email === email && u.password === password);
-
-  if (!user) {
-    return res.status(401).json({ error: 'Credenciales inválidas' });
+  const usuario = usuarios.find((usuarioRegistrado) => usuarioRegistrado.email === email);
+  if (!usuario) {
+    return res.status(401).json({ mensaje: 'Credenciales incorrectas' });
   }
 
-  res.json({
-    message: 'Login exitoso',
-    user: {
-      id: user.id,
-      email: user.email,
-      name: user.name
+  const passwordValido = await bcrypt.compare(password, usuario.password);
+  if (!passwordValido) {
+    return res.status(401).json({ mensaje: 'Credenciales incorrectas' });
+  }
+
+  const token = jwt.sign(
+    { id: usuario.id, email: usuario.email },
+    JWT_SECRET,
+    { expiresIn: '2h' }
+  );
+
+  return res.status(200).json({
+    mensaje: 'Login exitoso',
+    token,
+    usuario: {
+      id: usuario.id,
+      nombre: usuario.nombre,
+      email: usuario.email
     }
   });
 });

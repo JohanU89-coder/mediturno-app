@@ -10,21 +10,27 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="auth-page">
-  <div class="auth-shell">
-    <aside class="auth-showcase">
-      <nav class="brand-bar">
-        <a class="brand-mark" href="index.html" aria-label="Ir al inicio de MediTurno">
-          <span class="brand-icon">+</span>
-          <span class="brand-text">MediTurno</span>
-        </a>
-      </nav>
+  <header class="site-header">
+    <a class="brand-mark" href="index.html" aria-label="Ir al inicio de MediTurno">
+      <span class="brand-icon">+</span>
+      <span class="brand-text">MediTurno</span>
+    </a>
 
+    <nav class="page-nav" aria-label="Navegacion principal">
+      <a class="nav-button" href="index.html">Inicio</a>
+      <a class="nav-button active" href="login.html">Iniciar sesion</a>
+      <a class="nav-button" href="register.html">Registrarse</a>
+    </nav>
+  </header>
+
+  <main class="auth-shell">
+    <aside class="auth-showcase">
       <div class="showcase-copy">
-        <span class="eyebrow">Reservas medicas inteligentes</span>
+        <span class="eyebrow">Acceso seguro</span>
         <h1>Ingresa y organiza tus turnos de salud sin friccion.</h1>
         <p>
-          Accede a tus citas, revisa horarios disponibles y mantente al dia con tus
-          consultas medicas en una plataforma clara, confiable y rapida.
+          Revisa tus proximas citas, confirma horarios y mantente al dia con tus
+          consultas medicas desde una plataforma simple y ordenada.
         </p>
       </div>
 
@@ -54,51 +60,49 @@
       </div>
     </aside>
 
-    <main class="auth-content">
-      <section class="auth-card">
-        <div class="card-heading">
-          <span class="eyebrow">Bienvenido</span>
-          <h2>Inicia sesion</h2>
-          <p>Gestiona tus reservas medicas con seguridad y en pocos pasos.</p>
-        </div>
+    <section class="auth-card" aria-labelledby="login-title">
+      <div class="card-heading">
+        <span class="eyebrow">Bienvenido</span>
+        <h2 id="login-title">Inicia sesion</h2>
+        <p>Gestiona tus reservas medicas con seguridad y en pocos pasos.</p>
+      </div>
 
-        <form class="auth-form">
-          <label class="field">
-            <span>Correo institucional o personal</span>
-            <input type="email" name="email" placeholder="nombre@correo.com" required>
+      <form class="auth-form">
+        <label class="field">
+          <span>Correo institucional o personal</span>
+          <input type="email" name="email" placeholder="nombre@correo.com" required>
+        </label>
+
+        <label class="field">
+          <span>Contrasena</span>
+          <input type="password" name="password" placeholder="Ingresa tu contrasena" required>
+        </label>
+
+        <div class="form-row">
+          <label class="check-field">
+            <input type="checkbox" name="remember">
+            <span>Recordar sesion</span>
           </label>
-
-          <label class="field">
-            <span>Contrasena</span>
-            <input type="password" name="password" placeholder="Ingresa tu contrasena" required>
-          </label>
-
-          <div class="form-row">
-            <label class="check-field">
-              <input type="checkbox" name="remember">
-              <span>Recordar sesion</span>
-            </label>
-            <a href="#" class="text-link">Olvide mi contrasena</a>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Ingresar a MediTurno</button>
-        </form>
-
-        <div class="auth-divider">
-          <span>o continua con</span>
+          <a href="#" class="text-link">Olvide mi contrasena</a>
         </div>
 
-        <div class="social-actions">
-          <button type="button" class="btn btn-secondary">Google</button>
-          <button type="button" class="btn btn-secondary">Microsoft</button>
-        </div>
+        <button type="submit" class="btn btn-primary">Ingresar a MediTurno</button>
+      </form>
 
-        <p class="auth-footer">
-          Aun no tienes una cuenta?
-          <a href="register.html" class="text-link">Registrate aqui</a>
-        </p>
-      </section>
-    </main>
-  </div>
+      <div class="auth-divider">
+        <span>o continua con</span>
+      </div>
+
+      <div class="social-actions">
+        <button type="button" class="btn btn-secondary">Google</button>
+        <button type="button" class="btn btn-secondary">Microsoft</button>
+      </div>
+
+      <p class="auth-footer">
+        Aun no tienes una cuenta?
+        <a href="register.html" class="text-link">Registrate aqui</a>
+      </p>
+    </section>
+  </main>
 </body>
 </html>

@@ -1,0 +1,60 @@
+name: MediTurno CI
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+      - "feature/**"
+      - "release/**"
+
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  probar-backend:
+    name: Pruebas automatizadas del backend
+    runs-on: ubuntu-latest
+
+    env:
+      JWT_SECRET: secreto-exclusivo-para-integracion-continua
+
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: src/backend/package-lock.json
+
+      - name: Instalar dependencias
+        working-directory: src/backend
+        run: npm ci
+
+      - name: Ejecutar pruebas automatizadas
+        working-directory: src/backend
+        run: npm test
+
+  verificar-frontend:
+    name: Verificar archivos del frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Comprobar archivos principales
+        run: |
+          test -f src/frontend/index.html
+          test -f src/frontend/login.html
+          test -f src/frontend/register.html
+          test -f src/frontend/appointments.html
+          test -f src/frontend/appointments.js
+          test -f src/frontend/styles.css
+          test -f src/frontend/appointments.css
+          echo "Archivos principales del frontend verificados correctamente"

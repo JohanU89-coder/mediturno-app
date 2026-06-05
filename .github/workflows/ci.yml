@@ -5,45 +5,56 @@ on:
     branches:
       - develop
       - main
-      - 'feature/**'
+      - "feature/**"
+      - "release/**"
+
   pull_request:
     branches:
       - develop
       - main
 
 jobs:
-
   probar-backend:
-    name: Pruebas del Backend
+    name: Pruebas automatizadas del backend
     runs-on: ubuntu-latest
+
+    env:
+      JWT_SECRET: secreto-exclusivo-para-integracion-continua
+
     steps:
-      - name: Descargar código
+      - name: Descargar codigo
         uses: actions/checkout@v4
 
-      - name: Instalar Node.js v20
+      - name: Instalar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: src/backend/package-lock.json
 
       - name: Instalar dependencias
         working-directory: src/backend
-        run: npm install
+        run: npm ci
 
-      - name: Ejecutar pruebas
+      - name: Ejecutar pruebas automatizadas
         working-directory: src/backend
         run: npm test
 
   verificar-frontend:
-    name: Verificar archivos del Frontend
+    name: Verificar archivos del frontend
     runs-on: ubuntu-latest
+
     steps:
-      - name: Descargar código
+      - name: Descargar codigo
         uses: actions/checkout@v4
 
-      - name: Comprobar archivos HTML
+      - name: Comprobar archivos principales
         run: |
-          echo "Verificando frontend..."
-          test -f src/frontend/index.html      && echo "OK index.html"      || (echo "FALTA index.html" && exit 1)
-          test -f src/frontend/login.html      && echo "OK login.html"      || (echo "FALTA login.html" && exit 1)
-          test -f src/frontend/appointments.html && echo "OK appointments.html" || (echo "FALTA appointments.html" && exit 1)
-          echo "Frontend OK" 
+          test -f src/frontend/index.html
+          test -f src/frontend/login.html
+          test -f src/frontend/register.html
+          test -f src/frontend/appointments.html
+          test -f src/frontend/appointments.js
+          test -f src/frontend/styles.css
+          test -f src/frontend/appointments.css
+          echo "Archivos principales del frontend verificados correctamente"

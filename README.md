@@ -1,12 +1,10 @@
 # MediTurno
 
-MediTurno es una aplicacion web academica para gestionar turnos medicos. Permite registrar usuarios, iniciar sesion, reservar turnos, consultar los turnos del usuario autenticado y cancelar turnos existentes.
+MediTurno es una aplicacion web academica para gestionar turnos medicos. Permite registrar usuarios, iniciar sesion, reservar turnos, consultar las citas del usuario autenticado y cancelar turnos existentes.
 
-## Tecnologias utilizadas
+## Tecnologias usadas
 
-- HTML
-- CSS
-- JavaScript
+- HTML, CSS y JavaScript
 - Node.js
 - Express
 - JWT
@@ -14,9 +12,9 @@ MediTurno es una aplicacion web academica para gestionar turnos medicos. Permite
 - Jest
 - Supertest
 - GitHub Actions
-- Git y GitHub
+- Render
 
-## Estructura del repositorio
+## Estructura del proyecto
 
 ```text
 .
@@ -43,25 +41,48 @@ MediTurno es una aplicacion web academica para gestionar turnos medicos. Permite
 |       |-- index.html
 |       |-- login.html
 |       |-- register.html
+|       |-- styleindex.css
 |       `-- styles.css
 |-- .env.example
-|-- .gitattributes
 |-- .gitignore
+|-- render.yaml
 `-- README.md
 ```
 
-## Requisitos previos
+## Estrategia de ramas
 
-- Node.js 20 o compatible
-- npm
-- Git
+- `main`: rama estable y de produccion.
+- `develop`: rama de integracion.
+- `feature/*`: ramas de desarrollo para nuevas funcionalidades o configuraciones.
+- `release/*`: ramas de preparacion de version antes de produccion.
 
-## Instalacion y ejecucion
+Flujo esperado:
+
+```text
+feature/* -> develop -> main -> Render
+```
+
+No se realizan cambios directos en `main`. El despliegue automatico ocurre solo cuando los cambios llegan a `main`.
+
+## Flujo de trabajo
+
+1. Crear una rama `feature/*` desde `develop`.
+2. Implementar cambios y ejecutar pruebas locales.
+3. Abrir Pull Request hacia `develop`.
+4. GitHub Actions valida backend y frontend.
+5. Abrir Pull Request de `develop` hacia `main`.
+6. Al fusionar en `main`, GitHub Actions dispara el Deploy Hook de Render.
+
+GitHub Actions valida codigo en `develop` y `main`, pero el despliegue solo ocurre al fusionar cambios en `main`.
+
+## Ejecucion local
+
+Crear variables de entorno antes de iniciar:
 
 ```bash
-git clone https://github.com/JohanU89-coder/mediturno-app.git
-cd mediturno-app/src/backend
-npm install
+cd src/backend
+npm ci
+npm start
 ```
 
 En Windows PowerShell:
@@ -80,9 +101,9 @@ export PORT="5000"
 npm start
 ```
 
-El backend inicia en el puerto configurado por `PORT` o en `5000` por defecto. El frontend esta compuesto por archivos HTML, CSS y JavaScript ubicados en `src/frontend/`.
+El servidor usa `PORT` o `5000` por defecto. En produccion sirve el frontend desde `src/backend/public`. En local, si `src/backend/public` no existe, sirve los archivos desde `src/frontend`.
 
-## Ejecucion de pruebas
+## Pruebas
 
 ```bash
 cd src/backend
@@ -90,71 +111,94 @@ npm ci
 npm test
 ```
 
-Las pruebas automatizadas validan registro, login, manejo de contrasenas en respuestas, autenticacion con JWT, creacion, consulta y cancelacion de turnos, ademas de validaciones de campos obligatorios.
+Las pruebas usan Jest y Supertest para validar registro, login, JWT, creacion, consulta y cancelacion de turnos.
 
-## Endpoints
-
-| Metodo | Endpoint                 | Descripcion                  | Autenticacion |
-| ------ | ------------------------ | ---------------------------- | ------------- |
-| POST   | `/api/usuarios/registro` | Registra un usuario          | No            |
-| POST   | `/api/usuarios/login`    | Inicia sesion y genera JWT   | No            |
-| GET    | `/api/turnos`            | Lista los turnos del usuario | Si            |
-| POST   | `/api/turnos`            | Crea un turno                | Si            |
-| DELETE | `/api/turnos/:id`        | Cancela un turno             | Si            |
-| GET    | `/`                      | Health check del servidor    | No            |
-
-## Flujo de ramas
-
-El flujo de trabajo considerado para el proyecto contempla:
+## Variables de entorno
 
 ```text
-main
-develop
-feature/*
-release/*
-bugfix/*
-hotfix/*
+PORT
+JWT_SECRET
+NODE_ENV
 ```
 
-Ramas verificadas en el repositorio local y remoto al momento de esta revision:
+`JWT_SECRET` debe configurarse como variable de entorno. No debe subirse un secreto real al repositorio.
+
+## GitHub Actions
+
+El workflow esta en `.github/workflows/ci.yml` y se ejecuta en:
+
+- `pull_request` hacia `develop` y `main`
+- `push` hacia `develop` y `main`
+
+El job de validacion:
+
+- Usa Ubuntu.
+- Usa Node.js 20.
+- Ejecuta `npm ci` y `npm test` en `src/backend`.
+- Configura un `JWT_SECRET` de prueba para CI.
+- Valida que los archivos principales del frontend existan y no esten vacios con `test -s`.
+
+Secrets necesarios en GitHub:
 
 ```text
-main
-develop
-feature/registro-login
-feature/api-usuarios
-feature/api-turnos
-feature/agendamiento-citas
-feature/github-actions
-frontend
-release/v1.0
+RENDER_DEPLOY_HOOK_URL
+RENDER_SERVICE_URL
 ```
 
-## Integracion continua
+`RENDER_DEPLOY_HOOK_URL` dispara el despliegue en Render. `RENDER_SERVICE_URL` es opcional y permite ejecutar un smoke test contra `/api/health`.
 
-El workflow de GitHub Actions se encuentra en `.github/workflows/ci.yml`. Actualmente:
+## Configuracion de Render
 
-- Instala dependencias del backend con `npm ci`.
-- Ejecuta las pruebas automatizadas con Jest y Supertest.
-- Configura `JWT_SECRET` solo para CI.
-- Verifica que existan los archivos principales del frontend.
-- Se ejecuta en pushes hacia `develop`, `main`, `feature/**` y `release/**`.
-- Se ejecuta en Pull Requests hacia `develop` y `main`.
+El repositorio incluye `render.yaml` para definir un Web Service Node. Tambien puede configurarse manualmente en Render con estos valores:
 
-Actualmente el proyecto implementa Integracion Continua. El despliegue automatico hacia produccion se considera una mejora futura.
+- Branch: `main`
+- Runtime: Node
+- Build command:
 
-## Seguridad
+```bash
+cd src/backend && npm ci --include=dev && npm test && rm -rf public && mkdir -p public && cp -R ../frontend/* public && npm prune --omit=dev
+```
 
-- Las contrasenas se protegen con bcrypt antes de guardarse en memoria.
-- La autenticacion utiliza JWT.
-- `JWT_SECRET` se obtiene desde variables de entorno.
-- El archivo `.env` no debe versionarse.
-- `.env.example` contiene solo valores de referencia para configuracion local.
+- Start command:
 
-## Limitaciones actuales y mejoras futuras
+```bash
+cd src/backend && npm start
+```
 
-- Actualmente no existe despliegue automatico.
-- Los usuarios y turnos se almacenan en memoria; se recomienda incorporar una base de datos persistente.
-- Se recomienda ampliar las pruebas del frontend.
-- Se recomienda implementar roles.
-- Se recomienda configurar proteccion de ramas desde GitHub.
+Variables de entorno en Render:
+
+```text
+NODE_ENV=production
+JWT_SECRET=<valor-secreto-configurado-en-render>
+```
+
+Render define `PORT` automaticamente para el servicio web. El Health Check Path recomendado es `/api/health`.
+
+## Endpoints principales
+
+| Metodo | Endpoint                 | Descripcion                         | Autenticacion |
+| ------ | ------------------------ | ----------------------------------- | ------------- |
+| GET    | `/`                      | Frontend de MediTurno               | No            |
+| GET    | `/api/health`            | Health check del backend            | No            |
+| POST   | `/api/usuarios/registro` | Registra un usuario                 | No            |
+| POST   | `/api/usuarios/login`    | Inicia sesion y genera JWT          | No            |
+| GET    | `/api/turnos`            | Lista turnos del usuario autenticado | Si            |
+| POST   | `/api/turnos`            | Crea un turno                       | Si            |
+| DELETE | `/api/turnos/:id`        | Cancela un turno                    | Si            |
+
+## Seguridad y control de archivos
+
+- `.env` no debe versionarse.
+- `.env.example` se mantiene como referencia sin secretos reales.
+- `node_modules`, logs, coverage y `src/backend/public` no se versionan.
+- `src/backend/public` se genera durante el build de Render.
+
+## Pasos manuales para produccion
+
+1. Crear el servicio Web Service en Render conectado al repositorio.
+2. Configurar `JWT_SECRET` y `NODE_ENV=production` en Render.
+3. Crear el Deploy Hook en Render.
+4. Agregar `RENDER_DEPLOY_HOOK_URL` como secret en GitHub.
+5. Agregar `RENDER_SERVICE_URL` como secret opcional en GitHub para smoke test.
+6. Crear PR de `feature/render-deploy` hacia `develop`.
+7. Crear PR de `develop` hacia `main` cuando la integracion este aprobada.

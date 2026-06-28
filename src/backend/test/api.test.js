@@ -38,6 +38,28 @@ async function registrarYAutenticar() {
   };
 }
 
+describe('Health check', () => {
+  test('responde estado operativo', async () => {
+    const response = await request(app).get('/api/health');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      status: 'ok',
+      app: 'MediTurno',
+      message: 'Servidor MediTurno funcionando correctamente'
+    });
+  });
+
+  test('sirve el frontend desde la raiz', async () => {
+    const response = await request(app).get('/');
+
+    expect(response.status).toBe(200);
+    expect(response.headers['content-type']).toContain('text/html');
+    expect(response.text).toContain('<');
+    expect(response.body).toEqual({});
+  });
+});
+
 describe('API de usuarios', () => {
   test('registra un usuario con datos validos', async () => {
     const { usuario, response } = await registrarUsuario();

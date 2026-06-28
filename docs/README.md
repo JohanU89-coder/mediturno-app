@@ -34,9 +34,10 @@ Configuracion esperada:
 
 - Branch: `main`
 - Runtime: Node
-- Build command: `cd src/backend && npm ci && npm test && rm -rf public && mkdir -p public && cp -R ../frontend/* public && npm prune --omit=dev`
+- Build command: `cd src/backend && npm ci --include=dev && npm test && rm -rf public && mkdir -p public && cp -R ../frontend/* public && npm prune --omit=dev`
 - Start command: `cd src/backend && npm start`
 - Variables: `NODE_ENV=production` y `JWT_SECRET` configurado como secreto.
+- Health Check Path recomendado: `/api/health`.
 
 ## Endpoints
 

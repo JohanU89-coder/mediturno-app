@@ -156,7 +156,7 @@ El repositorio incluye `render.yaml` para definir un Web Service Node. Tambien p
 - Build command:
 
 ```bash
-cd src/backend && npm ci && npm test && rm -rf public && mkdir -p public && cp -R ../frontend/* public && npm prune --omit=dev
+cd src/backend && npm ci --include=dev && npm test && rm -rf public && mkdir -p public && cp -R ../frontend/* public && npm prune --omit=dev
 ```
 
 - Start command:
@@ -172,7 +172,7 @@ NODE_ENV=production
 JWT_SECRET=<valor-secreto-configurado-en-render>
 ```
 
-Render define `PORT` automaticamente para el servicio web.
+Render define `PORT` automaticamente para el servicio web. El Health Check Path recomendado es `/api/health`.
 
 ## Endpoints principales
 

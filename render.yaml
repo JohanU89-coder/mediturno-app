@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: free
     branch: main
-    buildCommand: "cd src/backend && npm ci && npm test && rm -rf public && mkdir -p public && cp -R ../frontend/* public && npm prune --omit=dev"
+    buildCommand: "cd src/backend && npm ci --include=dev && npm test && rm -rf public && mkdir -p public && cp -R ../frontend/* public && npm prune --omit=dev"
     startCommand: "cd src/backend && npm start"
     envVars:
       - key: NODE_ENV

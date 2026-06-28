@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 
@@ -12,11 +14,19 @@ const turnosRoutes = require('./routes/appointments');
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/turnos', turnosRoutes);
 
-app.get('/', (req, res) => {
+app.get('/api/health', (req, res) => {
   res.status(200).json({
-    mensaje: 'Servidor MediTurno funcionando correctamente'
+    status: 'ok',
+    app: 'MediTurno',
+    message: 'Servidor funcionando correctamente'
   });
 });
+
+const publicDir = path.join(__dirname, 'public');
+const localFrontendDir = path.join(__dirname, '..', 'frontend');
+const frontendDir = fs.existsSync(publicDir) ? publicDir : localFrontendDir;
+
+app.use(express.static(frontendDir));
 
 const PORT = process.env.PORT || 5000;
 

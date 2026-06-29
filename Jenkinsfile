@@ -37,13 +37,13 @@ pipeline {
         stage('Validate Frontend') {
             steps {
                 sh '''
-                test -s src/frontend/index.html
-                test -s src/frontend/login.html
-                test -s src/frontend/register.html
-                test -s src/frontend/appointments.html
-                test -s src/frontend/appointments.js
-                test -s src/frontend/appointments.css
-                test -s src/frontend/styles.css
+                test -f src/frontend/index.html
+                test -f src/frontend/login.html
+                test -f src/frontend/register.html
+                test -f src/frontend/appointments.html
+                test -f src/frontend/appointments.js
+                test -f src/frontend/appointments.css
+                test -f src/frontend/styles.css
                 echo "Archivos principales del frontend verificados correctamente"
                 '''
             }

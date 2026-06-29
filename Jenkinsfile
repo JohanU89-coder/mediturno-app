@@ -21,7 +21,7 @@ pipeline {
         stage('Install') {
             steps {
                 dir("${BACKEND_DIR}") {
-                    sh 'npm ci --include=dev'
+                    sh 'npm install'
                 }
             }
         }

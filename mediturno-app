@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'NodeJS_20'
+    }
+
+    stages {
+        stage('Verificar Node') {
+            steps {
+                sh 'node --version'
+                sh 'npm --version'
+            }
+        }
+    }
+}

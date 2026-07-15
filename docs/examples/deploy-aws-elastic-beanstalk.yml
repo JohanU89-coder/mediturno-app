@@ -1,0 +1,50 @@
+# Plantilla documental inactiva.
+# No mover a .github/workflows hasta crear la aplicacion y el entorno Elastic Beanstalk,
+# configurar OIDC, crear el rol IAM y definir las variables/secrets requeridos.
+# No usar Access Key ID ni Secret Access Key permanentes.
+
+name: Deploy AWS Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  AWS_EB_APPLICATION: ${{ vars.AWS_EB_APPLICATION }}
+  AWS_EB_ENVIRONMENT: ${{ vars.AWS_EB_ENVIRONMENT }}
+
+jobs:
+  deploy:
+    name: Deploy to Elastic Beanstalk
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials with OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Validate configuration
+        run: |
+          test -n "$AWS_REGION"
+          test -n "$AWS_EB_APPLICATION"
+          test -n "$AWS_EB_ENVIRONMENT"
+
+      - name: Deploy to Elastic Beanstalk
+        uses: aws-actions/aws-elasticbeanstalk-deploy@v1.0.0
+        with:
+          application_name: ${{ env.AWS_EB_APPLICATION }}
+          environment_name: ${{ env.AWS_EB_ENVIRONMENT }}
+          region: ${{ env.AWS_REGION }}
+          version_label: ${{ github.sha }}
+          deployment_package: .

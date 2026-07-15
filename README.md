@@ -174,6 +174,34 @@ JWT_SECRET=<valor-secreto-configurado-en-render>
 
 Render define `PORT` automaticamente para el servicio web. El Health Check Path recomendado es `/api/health`.
 
+## Docker, Kubernetes y AWS
+
+La adaptacion academica para Docker, Kubernetes local y AWS Elastic Beanstalk esta documentada en:
+
+- [docs/ADAPTACION_DOCKER_KUBERNETES_AWS.md](docs/ADAPTACION_DOCKER_KUBERNETES_AWS.md)
+- [k8s/README.md](k8s/README.md)
+- [docs/AWS_ELASTIC_BEANSTALK.md](docs/AWS_ELASTIC_BEANSTALK.md)
+
+Construir la imagen local:
+
+```bash
+docker build -t mediturno-app:local .
+```
+
+Ejecutar un contenedor local:
+
+```bash
+docker run --name mediturno-local -d -p 5000:5000 -e JWT_SECRET="<valor-local-de-prueba>" mediturno-app:local
+```
+
+Desplegar en Kubernetes local despues de crear el Secret:
+
+```bash
+kubectl apply -k k8s
+```
+
+No guardar valores reales de `JWT_SECRET` en archivos del repositorio.
+
 ## Endpoints principales
 
 | Metodo | Endpoint                 | Descripcion                         | Autenticacion |
